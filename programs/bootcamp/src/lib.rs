@@ -1,7 +1,6 @@
 use anchor_lang::prelude::*;
 use anchor_lang::solana_program::entrypoint::ProgramResult; //ADDed
-                                                            // This is your program's public key and it will update
-                                                            // automatically when you build the project.
+                                                            
 declare_id!("DTnSHxZHtvsAP7orMXNiDYFU694oBHZUjiXZn8gbV7Xi");
 
 #[program]
@@ -15,8 +14,8 @@ pub mod bootcamp {
         description: String,
         duration: u64,
         deposit_amount: u64,
-        status: bool,
-        refund: bool,
+        // status: bool,
+        // refund: bool,
     ) -> ProgramResult {
         let bootcamp = &mut ctx.accounts.bootcamp;
         bootcamp.name = name;
@@ -24,13 +23,13 @@ pub mod bootcamp {
         bootcamp.description = description;
         bootcamp.duration = duration;
         bootcamp.deposit_amount = deposit_amount;
-        bootcamp.status = status;
-        bootcamp.refund = refund;
+        // bootcamp.status = status;
+        // bootcamp.refund = refund;
         bootcamp.owner = *ctx.accounts.user.key; //owner is Hencode Club
         Ok(())
     }
 
-      // Transfer the deposit from the student account to the bootcamp account.
+    // Transfer the deposit from the student account to the bootcamp account.
     pub fn student_deposit(
         ctx: Context<StudentDeposit>, amount: u64) -> ProgramResult {
         let transaction = anchor_lang::solana_program::system_instruction::transfer(
@@ -87,13 +86,13 @@ pub struct CreateBootcamp<'info> {
 #[account]
 pub struct BootcampAccount {
     pub name: String,
-    pub balance: u64,   // Total balance of the bootcamps account
+    pub balance: u64,
     pub owner: Pubkey,
     pub description: String,
     pub duration: u64,
     pub deposit_amount: u64, // The deposit that each student should pay (lamports)
-    pub status: bool,
-    pub refund: bool,
+    // pub status: bool,
+    // pub refund: bool,
 }
 
 #[derive(Accounts)]
@@ -112,4 +111,3 @@ pub struct Refund<'info>{
     #[account(mut)]
     pub user: Signer<'info>,
 }    
-
